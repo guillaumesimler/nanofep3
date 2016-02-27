@@ -26,9 +26,29 @@ Enemy.prototype.render = function() {
 // a handleInput() method.
 
 
+var player = function() {
+    // Variables applied to each of our instances go here,
+    // we've provided one for you to get started
+
+    // The image/sprite for our enemies, this uses
+    // a helper we've provided to easily load images
+    this.sprite = 'images/char-boy.png';
+};
+
+
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
+
+var allEnemies= []
+
+var Enemy1 = new Enemy();
+var Enemy2 = new Enemy();
+var Enemy3 = new Enemy();
+
+allEnemies.push(Enemy1);
+allEnemies.push(Enemy2);
+allEnemies.push(Enemy3);
 
 
 
