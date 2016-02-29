@@ -52,38 +52,40 @@ function randomHeight() {
 // a handleInput() method.
 
 
-var player = function(x, y) {
-    this.x = x,
-    this.y = y,
+var Player = function(x,y) {
+    this.x = x;
+    this.y = y;
     this.sprite = 'images/char-boy.png';
 };
 
 
-player.update = function(dt) {
-    this.x = 505/2;
-    this.y = 606/2;
+Player.prototype.update = function() {
+    this.handleInput();
 };
 
-player.prototype.render = function() {
+Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-player.handleInput = function(_input) {
+Player.prototype.handleInput = function(_input) {
+
     if (_input === 'left') {
-        this.x = Math.max(this.x - 101, 83/2 ); 
+        this.x = Math.max(this.x - 101, 0 ); 
     }
 
     if (_input === 'right') {
-        this.x = Math.min(this.x + 101, 606 - 83/2 ); 
+        this.x = Math.min(this.x + 101, 400); 
     }
 
     if (_input === 'up') {
-        this.x = Math.max(this.x - 83, 101/2 ); 
+        this.y = Math.max(this.y - 83, 0 ); 
     }
 
     if (_input === 'down') {
-        this.x = Math.min(this.x + 83, 505 - 101/2 ); 
+        this.y = Math.min(this.y + 83, 405 ); 
     }
+
+
 };
 
 // Now instantiate your objects.
@@ -100,7 +102,7 @@ allEnemies.push(Enemy1);
 allEnemies.push(Enemy2);
 allEnemies.push(Enemy3);
 
-
+var player = new Player(200, 405);
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
