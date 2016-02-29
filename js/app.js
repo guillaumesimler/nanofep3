@@ -33,19 +33,6 @@ Enemy.prototype.render = function() {
 };
 
 
-// Randomize Speed and position of the bugs
-
-function randomSpeed() {
-    var speed = Math.floor(Math.random()*16) * 12.5 + 150;
-
-    return speed
-}
-
-function randomHeight() {
-    var pos = Math.floor(Math.random()*3) * 80 + 60;
-
-    return pos;
-}
 
 // Now write your own player class
 // This class requires an update(), render() and
@@ -88,6 +75,8 @@ Player.prototype.handleInput = function(_input) {
 
 };
 
+
+
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
@@ -116,3 +105,37 @@ document.addEventListener('keyup', function(e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
+
+
+// Randomize Speed and position of the bugs
+
+function randomSpeed() {
+    var speed = Math.floor(Math.random()*16) * 12.5 + 150;
+
+    return speed
+}
+
+function randomHeight() {
+    var pos = Math.floor(Math.random()*3) * 80 + 60;
+
+    return pos;
+}
+
+// Add the checkCollisions function
+// Current status is simple restart the player position
+
+function checkCollisions() {
+    allEnemies.forEach(function(enemy){
+        if ((Math.abs(player.x - enemy.x ) < 60) && (Math.abs(player.y - enemy.y) <40)) {
+            player.x =  200;
+            player.y =  405;
+
+            // Check the amount of lives
+        };
+    });
+
+    if (player.y <= 71) {
+        player.x =  200;
+        player.y =  405;
+    }
+} 
