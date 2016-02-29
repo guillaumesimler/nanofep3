@@ -23,6 +23,8 @@ Enemy.prototype.update = function(dt) {
  
     if (this.x > 505)  {
         this.x = 0;
+        this.xSpeed = randomSpeed();
+        this.y = randomHeight();
     }
     this.x = this.x + this.xSpeed * dt ;
 };
@@ -55,6 +57,7 @@ Player.prototype.render = function() {
 };
 
 Player.prototype.handleInput = function(_input) {
+    // The max and the min are there to secure the limits of the canvas
 
     if (_input === 'left') {
         this.x = Math.max(this.x - 101, 0 ); 
@@ -107,7 +110,7 @@ document.addEventListener('keyup', function(e) {
 });
 
 
-// Randomize Speed and position of the bugs
+// Randomize Speed and position of the bugs to make it less calculated
 
 function randomSpeed() {
     var speed = Math.floor(Math.random()*16) * 12.5 + 150;
