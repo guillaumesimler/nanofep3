@@ -6,6 +6,7 @@ var Enemy = function(x, y, xSpeed) {
     this.y = y;
     this.xSpeed = xSpeed;
 
+
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
@@ -44,16 +45,23 @@ Enemy.prototype.render = function() {
 var Player = function(x,y) {
     this.x = x;
     this.y = y;
+    
+    this.score = 0;
     this.sprite = 'images/char-boy.png';
 };
 
 
 Player.prototype.update = function() {
     this.handleInput();
+
+
 };
 
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+
+    player.score = increaseScore(player.score);
+
 };
 
 Player.prototype.handleInput = function(_input) {
@@ -132,6 +140,7 @@ function checkCollisions() {
         if ((Math.abs(player.x - enemy.x ) < 60) && (Math.abs(player.y - enemy.y) <40)) {
             player.x =  200;
             player.y =  405;
+            player.score = player.score - 5;
 
             // Check the amount of lives
         };
@@ -140,5 +149,36 @@ function checkCollisions() {
     if (player.y <= 71) {
         player.x =  200;
         player.y =  405;
+        player.score = player.score + 10;
+
     }
 } 
+
+
+// Add a score
+
+function increaseScore(_input){
+    // no points if player on the grass (y >= 322)
+    if (player.y < 322){
+        _input = _input + 1/100;
+    }
+
+
+
+    // Change style color
+
+    if(_input >=0 ) {
+        ctx.fillStyle = "green";
+    } else {
+        ctx.fillStyle = "red";
+    }
+
+    ctx.font = "18pt Impact";
+    
+    ctx.fillText('Points: ' + Math.floor(_input), 10, 90);
+    ctx.lineWidth = 2;
+    ctx.strokeText('Points: ' + Math.floor(_input), 10, 90);
+
+    return _input;
+    
+}
