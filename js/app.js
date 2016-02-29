@@ -24,9 +24,7 @@ Enemy.prototype.update = function(dt) {
     if (this.x > 505)  {
         this.x = 0;
     }
-
     this.x = this.x + this.xSpeed * dt ;
-
 };
 
 // Draw the enemy on the screen, required method for game
@@ -35,18 +33,30 @@ Enemy.prototype.render = function() {
 };
 
 
-//
+// Randomize Speed and position of the bugs
 
+function randomSpeed() {
+    var speed = Math.floor(Math.random()*16) * 12.5 + 150;
+
+    return speed
+}
+
+function randomHeight() {
+    var pos = Math.floor(Math.random()*3) * 80 + 60;
+
+    return pos;
+}
 
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
 
 
-var player = function() {
+var player = function(x, y) {
+    this.x = x,
+    this.y = y,
     this.sprite = 'images/char-boy.png';
 };
-
 
 
 player.update = function(dt) {
@@ -82,13 +92,13 @@ player.handleInput = function(_input) {
 
 var allEnemies= []
 
-var Enemy1 = new Enemy(0, 60, 150);
-// var Enemy2 = new Enemy();
-// var Enemy3 = new Enemy();
+var Enemy1 = new Enemy(0, randomHeight(), randomSpeed());
+var Enemy2 = new Enemy(0, randomHeight(), randomSpeed());
+var Enemy3 = new Enemy(0, randomHeight(), randomSpeed());
 
 allEnemies.push(Enemy1);
-//allEnemies.push(Enemy2);
-//allEnemies.push(Enemy3);
+allEnemies.push(Enemy2);
+allEnemies.push(Enemy3);
 
 
 
