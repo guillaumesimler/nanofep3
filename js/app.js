@@ -1,7 +1,10 @@
 // Enemies our player must avoid
-var Enemy = function() {
+var Enemy = function(x, y, xSpeed) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
+    this.x = x;
+    this.y = y;
+    this.xSpeed = xSpeed;
 
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
@@ -15,20 +18,14 @@ Enemy.prototype.update = function(dt) {
     // which will ensure the game runs at the same speed for
     // all computers.
 
-    var xSpeed = Math.floor((Math.random()*300)+1);
-
         // Initialize the bug 
-        // - Start of the program when x still undefined
-        // - End of the screen (reset)  
-    if ((this.x === undefined) || (this.x > 505))  {
-        this.x = 0
-        
-    };
-    var xSpeed = 300 //Math.floor((Math.random()*300)+1);
+        // - End of the screen (reset) 
+ 
+    if (this.x > 505)  {
+        this.x = 0;
+    }
 
-    this.x = this.x + xSpeed * dt ;
-    this.y =  83/2;
-
+    this.x = this.x + this.xSpeed * dt ;
 
 };
 
@@ -36,6 +33,10 @@ Enemy.prototype.update = function(dt) {
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
+
+
+//
+
 
 // Now write your own player class
 // This class requires an update(), render() and
@@ -81,7 +82,7 @@ player.handleInput = function(_input) {
 
 var allEnemies= []
 
-var Enemy1 = new Enemy();
+var Enemy1 = new Enemy(0, 60, 150);
 // var Enemy2 = new Enemy();
 // var Enemy3 = new Enemy();
 
