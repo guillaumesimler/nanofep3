@@ -20,10 +20,13 @@ The aim of the project is to build a arcade game :-) ! Obviously this is only th
 
 For detailed instructions about the tasks [guide](https://docs.google.com/document/d/1v01aScPjSWCCWQLIpFqvg3-vXLH2e8_SZQKC8jNO0Dc/pub?embedded=true).
 
-Latest Update
+Latest Updates (more details on [Github](https://github.com/guillaumesimler/nanofep3/commits/master))
 ----
-
-2016 02 16: Init the project (Readme, License, replacement of the fork by a real repositery as no pull request is to expected)
+2016 03 01: Implement gem class and increase randomnes of the game
+2016 02 29: Improve the bugs (enemies), add scoring model and collision management
+2016 02 28: Implement of the first bug 
+2016 02 27: Understand engine.js, import the first variable
+2016 02 26: Init the project (Readme, License, replacement of the fork by a real repositery as no pull request is to expected)
 
 
 Known bugs
