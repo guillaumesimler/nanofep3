@@ -29,10 +29,11 @@ Latest Updates (more details on [Github](https://github.com/guillaumesimler/nano
 2016 02 26: Init the project (Readme, License, replacement of the fork by a real repositery as no pull request is to expected)
 
 
-Known bugs
+Known bugs and improvements
 ----
 The known bugs are published [here](https://github.com/guillaumesimler/nanofep3/issues). Should you find a unknown bug, please be so kind to update the issue. 
 
+The improvements and major changes are discussed on the [Github wiki](https://github.com/guillaumesimler/nanofep3/wiki)
 
 Used repository 
 ----

@@ -19,14 +19,15 @@ Enemy.prototype.update = function(dt) {
     // which will ensure the game runs at the same speed for
     // all computers.
 
-        // Initialize the bug 
-        // - End of the screen (reset) 
+    // Initialize the bug 
+    // - End of the screen (reset) 
  
     if (this.x > 505)  {
         this.x = 0;
         this.xSpeed = randomSpeed();
         this.y = randomHeight();
     }
+
     this.x = this.x + this.xSpeed * dt ;
 };
 
@@ -37,6 +38,20 @@ Enemy.prototype.render = function() {
 
 
 
+// Randomize Speed and position of the bugs to make it more surprising
+
+function randomSpeed() {
+    var speed = Math.floor(Math.random()*16) * 12.5 + 150;
+
+    return speed
+}
+
+function randomHeight() {
+    var pos = Math.floor(Math.random()*3) * 80 + 60;
+
+    return pos;
+}
+
 // Player class
 // This class contains an update(), render() and
 // a handleInput() method.
@@ -45,9 +60,9 @@ Enemy.prototype.render = function() {
 var Player = function(x,y) {
     this.x = x;
     this.y = y;
-    
     this.score = 0;
 
+    // Use the available colors on a random principle 
     var hero =['images/char-boy.png','images/char-cat-girl.png', 'images/char-horn-girl.png','images/char-pink-girl.png','images/char-princess-girl.png'];
     this.sprite = hero[Math.floor(Math.random() *5)];
 };
@@ -106,7 +121,7 @@ Gem.prototype.update = function() {
                 // Calculate a ramdom X position (every 100th x pixels)
         this.x = Math.floor(Math.random()*5)*100;
 
-            // Use the available colors on a random principle
+        // Use the available colors on a random principle
         var colorSelector = ['images/Gem-Green.png', 'images/Gem-Orange.png', 'images/Gem-Blue.png']
         this.sprite = colorSelector[Math.floor(Math.random() *3)];
 
@@ -163,19 +178,7 @@ document.addEventListener('keyup', function(e) {
 });
 
 
-// Randomize Speed and position of the bugs to make it more surprising
 
-function randomSpeed() {
-    var speed = Math.floor(Math.random()*16) * 12.5 + 150;
-
-    return speed
-}
-
-function randomHeight() {
-    var pos = Math.floor(Math.random()*3) * 80 + 60;
-
-    return pos;
-}
 
 // Add the checkCollisions function
 // Current status is simple restart the player position
@@ -188,7 +191,7 @@ function checkCollisions() {
         if ((Math.abs(player.x - enemy.x ) < 60) && (Math.abs(player.y - enemy.y) <40)) {
             player.x =  200;
             player.y =  405;
-            player.score = player.score - 5;
+            player.score = player.score - 15;
 
             // Check the amount of lives (to implement later)
         };
