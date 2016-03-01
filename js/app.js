@@ -19,8 +19,8 @@ Enemy.prototype.update = function(dt) {
     // which will ensure the game runs at the same speed for
     // all computers.
 
-    // Initialize the bug 
-    // - End of the screen (reset) 
+    // Initializes the bug 
+    // & resets it at the end of the screen (505px)  
  
     if (this.x > 505)  {
         this.x = 0;
@@ -57,9 +57,9 @@ function randomHeight() {
 // a handleInput() method.
 
 
-var Player = function(x,y) {
-    this.x = x;
-    this.y = y;
+var Player = function() {
+    this.x = 200;
+    this.y = 405;
     this.score = 0;
 
     // Use the available colors on a random principle 
@@ -107,9 +107,7 @@ Player.prototype.handleInput = function(_input) {
 //Gem class
 // This class contains a render() and update() function function 
 
-var Gem = function(x, y) {
-    this.x = x;
-    this.y = y;
+var Gem = function() {
     //this variable aims to limit the number of gems 
     this.init = false;
     this.Update = true;
@@ -118,16 +116,16 @@ var Gem = function(x, y) {
 Gem.prototype.update = function() {
     if ((this.Update) & (Math.floor(Math.random()*150) === 0)) {
         this.init = true;
-                // Calculate a ramdom X position (every 100th x pixels)
+        // Calculate a ramdom X position (every 100th x pixels)
         this.x = Math.floor(Math.random()*5)*100;
-
-        // Use the available colors on a random principle
-        var colorSelector = ['images/Gem-Green.png', 'images/Gem-Orange.png', 'images/Gem-Blue.png']
-        this.sprite = colorSelector[Math.floor(Math.random() *3)];
 
         // Calculate a random y position (65, 150, 235)
         // Check analogy with Player.prototype.handleInput
         this.y = 235 - Math.floor(Math.random()*3) * 85;
+        
+        // Use the available colors on a random principle
+        var colorSelector = ['images/Gem-Green.png', 'images/Gem-Orange.png', 'images/Gem-Blue.png']
+        this.sprite = colorSelector[Math.floor(Math.random() *3)];
     }        
 }
 
@@ -160,7 +158,7 @@ allEnemies.push(Enemy1);
 allEnemies.push(Enemy2);
 allEnemies.push(Enemy3);
 
-var player = new Player(200, 405);
+var player = new Player();
 
 var gem = new Gem(0,0);
 
@@ -208,10 +206,11 @@ function checkCollisions() {
 
     // reaching a gem
 
-    if ((player.x == gem.x) && (player.y == gem.y)){
+    if ((player.x === gem.x) && (player.y === gem.y)){
         player.score = player.score + 25;
         gem.Update = true;
         gem.init = false;
+        // get the coordinates out of scoring range
         gem.x =0;
         gem.y =0;
     }
