@@ -46,6 +46,7 @@ The player can play with the 4 keyboard arrows.
 
 Latest Updates (more details on [Github](https://github.com/guillaumesimler/nanofep3/commits/master))
 ----
+2016 03 02: Improve encapsulation and comments 
 2016 03 01: Implement gem class and increase randomnes of the game
 2016 02 29: Improve the bugs (enemies), add scoring model and collision management
 2016 02 28: Implement of the first bug 

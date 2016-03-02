@@ -43,16 +43,16 @@ Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-
-
-// Randomize Speed and position of the bugs to make it more surprising
-
+// Randomize Speed  of the bugs to make it more surprising
+// Helper need by two methods in the game (update() and initialize())
 function randomSpeed() {
     var speed = Math.floor(Math.random() * 16) * 12.5 + 150;
 
     return speed
 }
 
+// Randomize Height of the bugs to make it more surprising
+// Helper need by two methods in the game (update() and initialize())
 function randomHeight() {
     var pos = Math.floor(Math.random() * 3) * 80 + 60;
 
@@ -61,10 +61,9 @@ function randomHeight() {
 
 // Player class
 
-// This class contains an update(), render() and
-// a handleInput() method.
-
+// Describes the object Player.
 var Player = function() {
+    //initialize the position and the score
     this.x = 200;
     this.y = 405;
     this.score = 0;
@@ -74,23 +73,23 @@ var Player = function() {
     this.sprite = hero[Math.floor(Math.random() * 5)];
 };
 
-
+// Update the player's position, required method for game 
 Player.prototype.update = function() {
     this.handleInput();
-
-
 };
 
+
+// Draw the player and its score, required method for game
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 
     this.score = this.increaseScore();
-
 };
 
+// Handle the player's movements via keyboard, required method for game
+// works combined with event listener
 Player.prototype.handleInput = function(_input) {
     // The max and the min are there to secure the limits of the canvas
-
     if (_input === 'left') {
         this.x = Math.max(this.x - 100, 0);
     }
@@ -109,18 +108,16 @@ Player.prototype.handleInput = function(_input) {
 };
 
 
-// Add a score
-
+// Add a score (optional dev), required method for game
+// works with Player.prototype-render
+// It is largely discussed on https://github.com/guillaumesimler/nanofep3/wiki/Major-changes:-scoring-system
 Player.prototype.increaseScore = function() {
     // no points if player on the grass (y >= 300)
     if (this.y < 300) {
        this.score = this.score + 1 / 100;
     }
 
-
-
-    // Change style color for negative scores
-
+    // Change style color for negative  and positive scores
     if (this.score >= 0) {
         ctx.fillStyle = "green";
     } else {
@@ -136,15 +133,18 @@ Player.prototype.increaseScore = function() {
     return this.score;
 };
 
-//Gem class
-// This class contains a render() and update() function function 
 
+// Gem class: optional dev. but required in this version
+// The class is discussed at large in 
+// https://github.com/guillaumesimler/nanofep3/wiki/Major-changes:-the-Gem-class
+// This class contains a render() and update() function 
 var Gem = function() {
-    //this variable aims to limit the number of gems 
+    //these variables aim to limit the number of gems 
     this.init = false;
     this.Update = true;
 }
 
+// Generates a new gem. Required method for game
 Gem.prototype.update = function() {
     if ((this.Update) & (Math.floor(Math.random() * 150) === 0)) {
         this.init = true;
@@ -161,10 +161,9 @@ Gem.prototype.update = function() {
     }
 }
 
-
-
+// Draws a new gem (if allowed). Required method for game
 Gem.prototype.render = function() {
-
+    // Check whether the gem was greenlighted to be display (this.init === true)
     if (this.init) {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
         this.Update = false;
@@ -173,13 +172,11 @@ Gem.prototype.render = function() {
 
 
 
-
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 
 var allEnemies = []
-
 var Enemy1 = new Enemy();
 var Enemy2 = new Enemy();
 var Enemy3 = new Enemy();
@@ -190,7 +187,7 @@ allEnemies.push(Enemy3);
 
 var player = new Player();
 
-var gem = new Gem(0, 0);
+var gem = new Gem();
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
