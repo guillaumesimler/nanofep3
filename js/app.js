@@ -21,14 +21,14 @@ Enemy.prototype.update = function(dt) {
 
     // Initializes the bug 
     // & resets it at the end of the screen (505px)  
- 
-    if (this.x > 505)  {
+
+    if (this.x > 505) {
         this.x = 0;
         this.xSpeed = randomSpeed();
         this.y = randomHeight();
     }
 
-    this.x = this.x + this.xSpeed * dt ;
+    this.x = this.x + this.xSpeed * dt;
 };
 
 // Draw the enemy on the screen, required method for game
@@ -41,13 +41,13 @@ Enemy.prototype.render = function() {
 // Randomize Speed and position of the bugs to make it more surprising
 
 function randomSpeed() {
-    var speed = Math.floor(Math.random()*16) * 12.5 + 150;
+    var speed = Math.floor(Math.random() * 16) * 12.5 + 150;
 
     return speed
 }
 
 function randomHeight() {
-    var pos = Math.floor(Math.random()*3) * 80 + 60;
+    var pos = Math.floor(Math.random() * 3) * 80 + 60;
 
     return pos;
 }
@@ -63,8 +63,8 @@ var Player = function() {
     this.score = 0;
 
     // Use the available colors on a random principle 
-    var hero =['images/char-boy.png','images/char-cat-girl.png', 'images/char-horn-girl.png','images/char-pink-girl.png','images/char-princess-girl.png'];
-    this.sprite = hero[Math.floor(Math.random() *5)];
+    var hero = ['images/char-boy.png', 'images/char-cat-girl.png', 'images/char-horn-girl.png', 'images/char-pink-girl.png', 'images/char-princess-girl.png'];
+    this.sprite = hero[Math.floor(Math.random() * 5)];
 };
 
 
@@ -77,7 +77,7 @@ Player.prototype.update = function() {
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 
-    player.score = increaseScore(player.score);
+    this.score = this.increaseScore();
 
 };
 
@@ -85,24 +85,48 @@ Player.prototype.handleInput = function(_input) {
     // The max and the min are there to secure the limits of the canvas
 
     if (_input === 'left') {
-        this.x = Math.max(this.x - 100, 0 ); 
+        this.x = Math.max(this.x - 100, 0);
     }
 
     if (_input === 'right') {
-        this.x = Math.min(this.x + 100, 400); 
+        this.x = Math.min(this.x + 100, 400);
     }
 
     if (_input === 'up') {
-        this.y = Math.max(this.y - 85, 0 ); 
+        this.y = Math.max(this.y - 85, 0);
     }
 
     if (_input === 'down') {
-        this.y = Math.min(this.y + 85, 405 ); 
+        this.y = Math.min(this.y + 85, 405);
+    }
+};
+// Add a score
+
+
+Player.prototype.increaseScore = function() {
+    // no points if player on the grass (y >= 300)
+    if (this.y < 300) {
+       this.score = this.score + 1 / 100;
     }
 
 
-};
 
+    // Change style color for negative scores
+
+    if (this.score >= 0) {
+        ctx.fillStyle = "green";
+    } else {
+        ctx.fillStyle = "red";
+    }
+
+    ctx.font = "18pt Impact";
+
+    ctx.fillText('Score: ' + Math.floor(this.score), 10, 90);
+    ctx.lineWidth = 2;
+    ctx.strokeText('Score: ' + Math.floor(this.score), 10, 90);
+
+    return this.score;
+};
 
 //Gem class
 // This class contains a render() and update() function function 
@@ -114,32 +138,30 @@ var Gem = function() {
 }
 
 Gem.prototype.update = function() {
-    if ((this.Update) & (Math.floor(Math.random()*150) === 0)) {
+    if ((this.Update) & (Math.floor(Math.random() * 150) === 0)) {
         this.init = true;
         // Calculate a ramdom X position (every 100th x pixels)
-        this.x = Math.floor(Math.random()*5)*100;
+        this.x = Math.floor(Math.random() * 5) * 100;
 
         // Calculate a random y position (65, 150, 235)
         // Check analogy with Player.prototype.handleInput
-        this.y = 235 - Math.floor(Math.random()*3) * 85;
-        
+        this.y = 235 - Math.floor(Math.random() * 3) * 85;
+
         // Use the available colors on a random principle
         var colorSelector = ['images/Gem-Green.png', 'images/Gem-Orange.png', 'images/Gem-Blue.png']
-        this.sprite = colorSelector[Math.floor(Math.random() *3)];
-    }        
+        this.sprite = colorSelector[Math.floor(Math.random() * 3)];
+    }
 }
 
 
 
 Gem.prototype.render = function() {
-    
-    if (this.init) {  
+
+    if (this.init) {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
         this.Update = false;
     };
 };
-
-                
 
 
 
@@ -148,7 +170,7 @@ Gem.prototype.render = function() {
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 
-var allEnemies= []
+var allEnemies = []
 
 var Enemy1 = new Enemy(0, randomHeight(), randomSpeed());
 var Enemy2 = new Enemy(0, randomHeight(), randomSpeed());
@@ -160,7 +182,7 @@ allEnemies.push(Enemy3);
 
 var player = new Player();
 
-var gem = new Gem(0,0);
+var gem = new Gem(0, 0);
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
@@ -185,10 +207,10 @@ function checkCollisions() {
 
     // collision with enemy 
 
-    allEnemies.forEach(function(enemy){
-        if ((Math.abs(player.x - enemy.x ) < 60) && (Math.abs(player.y - enemy.y) <40)) {
-            player.x =  200;
-            player.y =  405;
+    allEnemies.forEach(function(enemy) {
+        if ((Math.abs(player.x - enemy.x) < 60) && (Math.abs(player.y - enemy.y) < 40)) {
+            player.x = 200;
+            player.y = 405;
             player.score = player.score - 15;
 
             // Check the amount of lives (to implement later)
@@ -197,50 +219,23 @@ function checkCollisions() {
 
 
     // reaching the water
-    if (player.y <= 60 ) {
-        player.x =  200;
-        player.y =  405;
+    if (player.y <= 60) {
+        player.x = 200;
+        player.y = 405;
         player.score = player.score + 10;
 
     }
 
     // reaching a gem
 
-    if ((player.x === gem.x) && (player.y === gem.y)){
+    if ((player.x === gem.x) && (player.y === gem.y)) {
         player.score = player.score + 25;
         gem.Update = true;
         gem.init = false;
         // get the coordinates out of scoring range
-        gem.x =0;
-        gem.y =0;
+        gem.x = 0;
+        gem.y = 0;
     }
-} 
-
-
-// Add a score
-
-function increaseScore(_input){
-    // no points if player on the grass (y >= 300)
-    if (player.y < 300){
-        _input = _input + 1/100;
-    }
-
-
-
-    // Change style color for negative scores
-
-    if(_input >=0 ) {
-        ctx.fillStyle = "green";
-    } else {
-        ctx.fillStyle = "red";
-    }
-
-    ctx.font = "18pt Impact";
-    
-    ctx.fillText('Score: ' + Math.floor(_input), 10, 90);
-    ctx.lineWidth = 2;
-    ctx.strokeText('Score: ' + Math.floor(_input), 10, 90);
-
-    return _input;
-    
 }
+
+
