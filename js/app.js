@@ -1,33 +1,40 @@
-// Enemies our player must avoid
-var Enemy = function(x, y, xSpeed) {
+/*app.js - the file managing the game 3 objects (Enemy, Player, Gem)
+
+The current version is programmed and adapted by Guillaume Simler
+(https://github.com/guillaumesimler).
+The original version is part from the Udacity Front End Dev. Nanodegree.
+It was forked from https://github.com/udacity/frontend-nanodegree-arcade-game
+*/
+
+
+// Describes the object Enemy, our player will have to  avoid
+var Enemy = function() {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
-    this.x = x;
-    this.y = y;
-    this.xSpeed = xSpeed;
-
+    this.x = 0;
+    this.y = randomHeight();
+    this.xSpeed = randomSpeed();
 
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
 };
 
+
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
-    // You should multiply any movement by the dt parameter
-    // which will ensure the game runs at the same speed for
-    // all computers.
 
-    // Initializes the bug 
-    // & resets it at the end of the screen (505px)  
-
+    // Initializes the bug  & resets it at the end of the screen (505px)  
     if (this.x > 505) {
         this.x = 0;
         this.xSpeed = randomSpeed();
         this.y = randomHeight();
     }
 
+    // You should multiply any movement by the dt parameter
+    // which will ensure the game runs at the same speed for
+    // all computers.
     this.x = this.x + this.xSpeed * dt;
 };
 
@@ -53,9 +60,9 @@ function randomHeight() {
 }
 
 // Player class
+
 // This class contains an update(), render() and
 // a handleInput() method.
-
 
 var Player = function() {
     this.x = 200;
@@ -100,8 +107,9 @@ Player.prototype.handleInput = function(_input) {
         this.y = Math.min(this.y + 85, 405);
     }
 };
-// Add a score
 
+
+// Add a score
 
 Player.prototype.increaseScore = function() {
     // no points if player on the grass (y >= 300)
@@ -172,9 +180,9 @@ Gem.prototype.render = function() {
 
 var allEnemies = []
 
-var Enemy1 = new Enemy(0, randomHeight(), randomSpeed());
-var Enemy2 = new Enemy(0, randomHeight(), randomSpeed());
-var Enemy3 = new Enemy(0, randomHeight(), randomSpeed());
+var Enemy1 = new Enemy();
+var Enemy2 = new Enemy();
+var Enemy3 = new Enemy();
 
 allEnemies.push(Enemy1);
 allEnemies.push(Enemy2);
